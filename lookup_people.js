@@ -14,21 +14,20 @@ const client = new pg.Client({
 });
 
 client.connect((error) => {
-  if(error) console.log(error);
+  if(error) {
+    console.log(error);
+  }
 
   client.query(`SELECT * FROM famous_people WHERE last_name = '${name}'`, (error, results) => {
-    if(error) console.log(error);
+    if(error) {
+      console.log(error);
+    }
+    
     console.log('Searching...');
 
     console.log(`Found ${results.rows.length} person(s) by the name '${name}':`);
-
-    for (let row in results.rows) {
-      const id = results.rows[row].id;
-      const first_name = results.rows[row].first_name;
-      const last_name = results.rows[row].last_name;
-      const birthdate = results.rows[row].birthdate;
-      const date = moment(birthdate).format('YYYY-MM-DD');
-      console.log(`-${id}: ${first_name} ${last_name}, born ${date}`);
+    if (results.rows.length > 0) {
+      results.rows.forEach(printUser);
     }
 
     client.end((error) => {
@@ -36,3 +35,9 @@ client.connect((error) => {
     });
   });
 });
+
+function printUser(user) {
+  const { id, first_name, last_name, birthdate } = user;
+  const date = moment(birthdate).format('YYYY-MM-DD');
+  console.log(`-${id}: ${first_name} ${last_name}, born ${date}`);
+}
