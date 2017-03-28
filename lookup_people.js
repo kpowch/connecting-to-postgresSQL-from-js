@@ -1,3 +1,8 @@
+/*
+This script gets a last name through the command prompt, then searches and
+finds the famous person from the famous_people database (PostgreSQL) matching
+that last name using the native pg driver.
+*/
 const name = process.argv.slice(2)[0];
 
 const pg = require('pg');
@@ -22,7 +27,7 @@ client.connect((error) => {
     if(error) {
       console.log(error);
     }
-    
+
     console.log('Searching...');
 
     console.log(`Found ${results.rows.length} person(s) by the name '${name}':`);

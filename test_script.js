@@ -1,3 +1,7 @@
+/*
+This script is just an example test script on an introduction to connecting
+to PostgreSQL using javascript and the native pg driver
+*/
 const pg = require("pg");
 const settings = require("./settings"); // settings.json
 
